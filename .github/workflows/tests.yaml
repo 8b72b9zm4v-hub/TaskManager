@@ -1,12 +1,17 @@
 name: Node.js CI
 run-name: Run Tests
 
+permissions:
+  contents: read
+  pull-requests: write
+
 on:
   push:
     branches:
       - dev
 jobs:
-  build:
+
+  buildbackend:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -21,3 +26,9 @@ jobs:
     - run: npm install
     - run: npm run build --if-present
     - run: npm run test
+
+  callpr:
+    needs: [buildbackend]
+    uses: ./.github/workflows/prdevtomain.yaml
+
+

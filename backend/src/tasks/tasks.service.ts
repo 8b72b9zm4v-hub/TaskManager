@@ -27,7 +27,7 @@ export class TasksService {
 
   private async ensureExists(id: string) {
     const task = await this.prisma.task.findUnique({ where: { id } });
-    if (task) {
+    if (!task) {
       throw new NotFoundException(`Task ${id} not found`);
     }
   }

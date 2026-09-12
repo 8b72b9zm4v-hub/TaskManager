@@ -1,14 +1,9 @@
 name: Github Actions 
 run-name: Push to Dev 
 
-permissions:
-  contents: read
-  pull-requests: write
-
 on:
-    push:
-        branches:
-            - dev
+    workflow_call:
+
 jobs:
     create-pr:
         runs-on: ubuntu-latest
