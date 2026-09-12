@@ -13,9 +13,11 @@ jobs:
     create-pr:
         runs-on: ubuntu-latest
         steps:
+            - uses: actions/checkout@v6
             - name: Création d'une PR Dev -> Main
               run: |
                OPENEND_PR=$(gh pr list --head dev --base main --state open --json number --jq 'length')
+               echo OPENEND_PR
                if [ "$OPENEND_PR" -eq 0 ]; then
                 gh pr create --head dev --base main --title "New PR" --body "$COMMIT_MESSAGE"
                fi
