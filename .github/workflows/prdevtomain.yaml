@@ -25,4 +25,3 @@ jobs:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
 
-# Test
