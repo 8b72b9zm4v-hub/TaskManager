@@ -1,0 +1,17 @@
+services:
+  web:
+    build: .
+    env_file: ".env"
+  db:
+    image: postgres:18
+    environment:
+      POSTGRES_PASSWORD: local_dev_password
+      POSTGRES_DB: task_manager
+      POSTGRES_USER: task_manager
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql
+    
+volumes:
+  postgres_data:

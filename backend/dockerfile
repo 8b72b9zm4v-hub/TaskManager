@@ -1,0 +1,22 @@
+FROM node:alpine AS build
+
+WORKDIR /app
+COPY package.json .
+COPY src/ src/
+COPY prisma/ prisma/
+COPY tsconfig.build.json .
+COPY tsconfig.json .
+COPY nest-cli.json .
+RUN npm install
+RUN npm run build
+RUN npx prisma generate
+
+FROM node:alpine as final-stage
+WORKDIR /app
+COPY --from=build ./app/prisma prisma/.
+COPY --from=build ./app/package.json .
+COPY --from=build ./app/package-lock.json .
+COPY --from=build ./app/dist/ dist/.
+RUN npm i --omit dev
+EXPOSE 3000
+CMD ["node","./dist/main.js"]
