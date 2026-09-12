@@ -1,14 +1,9 @@
 name: Github Actions 
 run-name: Push to Dev 
 
-permissions:
-  contents: read
-  pull-requests: write
-
 on:
-    push:
-        branches:
-            - dev
+    workflow_call:
+
 jobs:
     create-pr:
         runs-on: ubuntu-latest
@@ -25,4 +20,3 @@ jobs:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
 
-# Test

@@ -1,0 +1,34 @@
+name: Node.js CI
+run-name: Run Tests
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+  push:
+    branches:
+      - dev
+jobs:
+
+  buildbackend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./backend
+    steps:
+    - uses: actions/checkout@v6
+    - name: Use Node.js
+      uses: actions/setup-node@v7
+      with:
+        node-version: "20.x"
+    - run: npm install
+    - run: npm run build --if-present
+    - run: npm run test
+
+  callpr:
+    needs: [buildbackend]
+    uses: ./.github/workflows/prdevtomain.yaml
+
+
