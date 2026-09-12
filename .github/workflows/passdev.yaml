@@ -1,0 +1,24 @@
+name: Github Actions 
+run-name: Push to Dev 
+
+permissions:
+  contents: read
+  pull-requests: write
+
+on:
+    push:
+        branches:
+            - dev
+jobs:
+    create-pr:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Création d'une PR Dev -> Main
+              run: |
+               OPENEND_PR=$(gh pr list --head dev --base main --state open --json number --jq 'length')
+               if [ "$OPENEND_PR" -eq 0 ]; then
+                gh pr create --head dev --base main --title "New PR" --body "$COMMIT_MESSAGE"
+               fi
+              env:
+                GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
