@@ -1,6 +1,6 @@
 resource "azurerm_resource_group" "TaskManagerResourceGroup" {
-    name = "TaskManager"
-    location = "France Central"
+  name     = "TaskManager"
+  location = "France Central"
 }
 
 # IDENTITE DE DEPLOIEMENT
@@ -24,18 +24,18 @@ resource "azurerm_federated_identity_credential" "github_main" {
 resource "random_id" "storage_suffix" {
   byte_length = 6
 }
-resource "azurerm_storage_account" "storage_account"{
-    name = "taskmanager${random_id.storage_suffix.hex}"
-    resource_group_name = azurerm_resource_group.TaskManagerResourceGroup.name
-    location = azurerm_resource_group.TaskManagerResourceGroup.location
-    account_tier="Standard"
-    account_replication_type="LRS"
+resource "azurerm_storage_account" "storage_account" {
+  name                     = "taskmanager${random_id.storage_suffix.hex}"
+  resource_group_name      = azurerm_resource_group.TaskManagerResourceGroup.name
+  location                 = azurerm_resource_group.TaskManagerResourceGroup.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "storage_container"{
-    name = "tfstate"
-    storage_account_id = azurerm_storage_account.storage_account.id
-    container_access_type = "private"
+resource "azurerm_storage_container" "storage_container" {
+  name                  = "tfstate"
+  storage_account_id    = azurerm_storage_account.storage_account.id
+  container_access_type = "private"
 }
 
 
@@ -71,7 +71,8 @@ resource "azurerm_federated_identity_credential" "taskmanager-ci-planner" {
   issuer                    = "https://token.actions.githubusercontent.com"
   user_assigned_identity_id = azurerm_user_assigned_identity.taskmanager-ci-planner.id
 
-  subject = "repo:8b72b9zm4v-hub/TaskManager:pull_request"
+  subject = "repo:8b72b9zm4v-hub@252215710/TaskManager@1367302588:pull_request"
+
 }
 
 resource "azurerm_role_assignment" "reader-planer" {

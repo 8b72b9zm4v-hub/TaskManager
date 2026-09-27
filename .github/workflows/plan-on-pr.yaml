@@ -7,7 +7,7 @@ on:
             - main
         paths: # Run seulement si ces fichiers sources diffèret des fichiers cibles
             - "terraform/prod/**"
-            - ".github/workflows/deploy.yaml"
+            - ".github/workflows/plan-on-pr.yaml"
 permissions:
     id-token: write
     contents: read
