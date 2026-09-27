@@ -1,6 +1,11 @@
 name: Create PR Dev -> Main
 run-name: Push to Dev 
 
+
+permissions:
+  contents: read
+  pull-requests: write
+  
 on:
     workflow_call:
 
