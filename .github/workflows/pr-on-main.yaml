@@ -1,4 +1,4 @@
-name: Github Actions 
+name: Create PR Dev -> Main
 run-name: Push to Dev 
 
 on:
@@ -19,4 +19,3 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-

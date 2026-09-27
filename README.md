@@ -19,3 +19,11 @@ L'intérêt de ce projet étant de consolider/démontrer mes compétences devops
 
 Contexte du projet:
 Gestionnaire de tâches minimaliste permettant d'ajouter et de supprimer des tâches à faire.
+
+CI testé localement avec act 
+
+TODO:
+documenter les identités
+documenter l'infra
+documenter la CI/CD
+documenter les providers nécessaires à activer pour lancer terraform (identités, networks)
