@@ -16,7 +16,8 @@ resource "azurerm_federated_identity_credential" "github_main" {
   issuer                    = "https://token.actions.githubusercontent.com"
   user_assigned_identity_id = azurerm_user_assigned_identity.taskmanager_ci_deployer.id
 
-  subject = "repo:8b72b9zm4v-hub/TaskManager:ref:refs/heads/main"
+  subject = "repo:8b72b9zm4v-hub@252215710/TaskManager@1367302588:ref:refs/heads/main"
+
 }
 
 
