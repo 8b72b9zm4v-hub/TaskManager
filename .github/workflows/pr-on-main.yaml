@@ -1,6 +1,11 @@
-name: Github Actions 
+name: Create PR Dev -> Main
 run-name: Push to Dev 
 
+
+permissions:
+  contents: read
+  pull-requests: write
+  
 on:
     workflow_call:
 
@@ -19,4 +24,3 @@ jobs:
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                 COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-

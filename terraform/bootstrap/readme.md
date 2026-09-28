@@ -1,0 +1,1 @@
+A exécuter lors de l'initialisation de l'infra, avant la première CI/CD
