@@ -55,5 +55,7 @@ jobs:
   callpr:
     needs: [testsbackend,builddocker,buildfrontend]
     uses: ./.github/workflows/pr-on-main.yaml
+    secrets:
+      PR_AUTOMATION_APP_PRIVATE_KEY: ${{secrets.PR_AUTOMATION_APP_PRIVATE_KEY}}
 
 
