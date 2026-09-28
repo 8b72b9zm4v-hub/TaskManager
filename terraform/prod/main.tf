@@ -28,7 +28,7 @@ resource "azurerm_subnet" "postgredelegation" {
   name                 = "storagesubnet"
   resource_group_name  = data.azurerm_resource_group.TaskManagerResourceGroup.name
   virtual_network_name = azurerm_virtual_network.vNet.name
-  address_prefixes     = ["10.1.255.255/28"]
+  address_prefixes     = ["10.0.0.32/28"]
   delegation {
     name = "postgredelegation"
     service_delegation {
@@ -111,7 +111,7 @@ resource "azurerm_container_app" "container_app" {
 resource "azurerm_static_web_app" "static_web_app" {
   name                = "frontend"
   resource_group_name = data.azurerm_resource_group.TaskManagerResourceGroup.name
-  location            = data.azurerm_resource_group.TaskManagerResourceGroup.location
+  location            = "westeurope""
   sku_tier            = "Free"
   sku_size            = "Free"
 

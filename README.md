@@ -157,6 +157,16 @@ dev
                                 └── Déploiement production à venir
 ```
 
+# Namespace required:
+Microsoft.KeyVault
+Microsoft.ManagedIdentity
+Microsft.Network
+Microsft.Microsoft.OperationalInsights
+Microsft.Microsoft.ContainerRegistry
+Microsft.Microsoft.Storage
+
+
+
 ## TODO
 
 - [ ] Ajouter le workflow de déploiement après merge sur `main`.
