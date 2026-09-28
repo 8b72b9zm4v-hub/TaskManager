@@ -8,13 +8,13 @@ resource "azurerm_virtual_network" "vNet" {
   location            = data.azurerm_resource_group.TaskManagerResourceGroup.location
   resource_group_name = data.azurerm_resource_group.TaskManagerResourceGroup.name
   # Azure demande un /28 pour postgre soit 16 adresses et /27 pour container apps soit 32 adresses -> 48 adresses au total -> 64 adresses -> 6 bits -> /26 
-  address_space = ["10.0.0.0/22"]
+  address_space = ["10.0.0.0/26"]
 }
 resource "azurerm_subnet" "computesubnet" {
   name                 = "computesubnet"
   resource_group_name  = data.azurerm_resource_group.TaskManagerResourceGroup.name
   virtual_network_name = azurerm_virtual_network.vNet.name
-  address_prefixes     = ["10.0.0.0/23"]
+  address_prefixes     = ["10.0.0.0/27"]
   delegation {
     name = "envdelegation"
     service_delegation {
