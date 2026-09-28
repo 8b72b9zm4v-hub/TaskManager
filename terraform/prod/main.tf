@@ -2,6 +2,17 @@ data "azurerm_resource_group" "TaskManagerResourceGroup" {
   name = "TaskManager"
 }
 
+resource "random_id" "kv_suffix" {
+  byte_length = 6
+}
+
+resource "random_id" "acr_suffix" {
+  byte_length = 6
+}
+resource "random_id" "pg_suffix" {
+  byte_length = 6
+}
+
 # Network
 resource "azurerm_virtual_network" "vNet" {
   name                = "private-network"
@@ -10,6 +21,7 @@ resource "azurerm_virtual_network" "vNet" {
   # Azure demande un /28 pour postgre soit 16 adresses et /27 pour container apps soit 32 adresses -> 48 adresses au total -> 64 adresses -> 6 bits -> /26 
   address_space = ["10.0.0.0/26"]
 }
+
 resource "azurerm_subnet" "computesubnet" {
   name                 = "computesubnet"
   resource_group_name  = data.azurerm_resource_group.TaskManagerResourceGroup.name
@@ -53,7 +65,7 @@ resource "azurerm_private_dns_zone_virtual_network_link" "virtualnetworklink" {
 
 # ACR
 resource "azurerm_container_registry" "acr" {
-  name                = "registrycontainer"
+  name                = "registrycontainer${random_id.acr_suffix.hex}"
   resource_group_name = data.azurerm_resource_group.TaskManagerResourceGroup.name
   location            = data.azurerm_resource_group.TaskManagerResourceGroup.location
   sku                 = "Standard"
@@ -73,10 +85,11 @@ resource "azurerm_container_app_environment" "container_app_env" {
   location                   = data.azurerm_resource_group.TaskManagerResourceGroup.location
   resource_group_name        = data.azurerm_resource_group.TaskManagerResourceGroup.name
   infrastructure_subnet_id   = azurerm_subnet.computesubnet.id
+  logs_destination= "log-analytics"
   log_analytics_workspace_id = azurerm_log_analytics_workspace.logs_analytics.id
 
   workload_profile {
-    name                  = var.consumption_workload_profile
+    name                  = "Consumption"
     workload_profile_type = "Consumption"
   }
 }
@@ -111,15 +124,14 @@ resource "azurerm_container_app" "container_app" {
 resource "azurerm_static_web_app" "static_web_app" {
   name                = "frontend"
   resource_group_name = data.azurerm_resource_group.TaskManagerResourceGroup.name
-  location            = "westeurope"
+  location            = "eastus2"
   sku_tier            = "Free"
   sku_size            = "Free"
-
 }
 
 # PostgreDB
 resource "azurerm_postgresql_flexible_server" "postgreSQL" {
-  name                          = "postgresql-flexibleserver"
+  name                          = "postgresql-flexibleserver-${random_id.pg_suffix.hex}"
   resource_group_name           = data.azurerm_resource_group.TaskManagerResourceGroup.name
   location                      = data.azurerm_resource_group.TaskManagerResourceGroup.location
   version                       = "16"
@@ -142,7 +154,7 @@ resource "azurerm_postgresql_flexible_server" "postgreSQL" {
 data "azurerm_client_config" "current" {}
 
 resource "azurerm_key_vault" "keyvault" {
-  name                       = "taskmanager-kv"
+  name                       = "taskmngerkv${random_id.kv_suffix.hex}"
   location                   = data.azurerm_resource_group.TaskManagerResourceGroup.location
   resource_group_name        = data.azurerm_resource_group.TaskManagerResourceGroup.name
   rbac_authorization_enabled = true
