@@ -111,7 +111,7 @@ resource "azurerm_container_app" "container_app" {
 resource "azurerm_static_web_app" "static_web_app" {
   name                = "frontend"
   resource_group_name = data.azurerm_resource_group.TaskManagerResourceGroup.name
-  location            = "westeurope""
+  location            = "westeurope"
   sku_tier            = "Free"
   sku_size            = "Free"
 
