@@ -85,7 +85,7 @@ resource "azurerm_container_app_environment" "container_app_env" {
   location                   = data.azurerm_resource_group.TaskManagerResourceGroup.location
   resource_group_name        = data.azurerm_resource_group.TaskManagerResourceGroup.name
   infrastructure_subnet_id   = azurerm_subnet.computesubnet.id
-  logs_destination= "log-analytics"
+  logs_destination           = "log-analytics"
   log_analytics_workspace_id = azurerm_log_analytics_workspace.logs_analytics.id
 
   workload_profile {
