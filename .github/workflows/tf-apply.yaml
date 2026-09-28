@@ -47,4 +47,3 @@ jobs:
             - name: terraform apply
               id: apply
               run: terraform apply -input=false tfplan
-
