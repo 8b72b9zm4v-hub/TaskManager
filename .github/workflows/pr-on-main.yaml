@@ -23,9 +23,9 @@ jobs:
                 private-key: ${{secrets.PR_AUTOMATION_APP_PRIVATE_KEY}}
             - name: Use API
               run: |
-               OPENEND_PR=$(gh pr list --head dev --base main --state open --json number --jq 'length')
+               OPENEND_PR=$(gh pr list --head dev --repo "$GITHUB_REPOSITORY" --base main --state open --json number --jq 'length')
                if [ "$OPENEND_PR" -eq 0 ]; then
-                gh pr create --head dev --base main --title "New PR" --body "$COMMIT_MESSAGE"
+                gh pr create --head dev --base main --repo "$GITHUB_REPOSITORY" --title "New PR" --body "$COMMIT_MESSAGE"
                fi
 
               env: 
