@@ -88,3 +88,28 @@ resource "azurerm_role_assignment" "storage_blob_data_contributor_ci_plan" {
   principal_id         = azurerm_user_assigned_identity.taskmanager-ci-planner.principal_id
 }
 
+data "azurerm_client_config" "current" {}
+# Nouveau rôle RBAC :
+resource "azurerm_role_definition" "planner_secret_reader" {
+  name        = "Terraform Planner Secret Reader"
+  scope       = "/subscriptions/${data.azurerm_client_config.current.subscription_id}"
+  description = "Allows Terraform plan to refresh required application secrets."
+
+  permissions {
+    actions = [
+      "Microsoft.App/containerApps/listSecrets/action",
+      "Microsoft.Web/staticSites/listSecrets/action",
+      "Microsoft.Web/staticSites/listAppSettings/action",
+    ]
+  }
+
+  assignable_scopes = [
+    azurerm_resource_group.TaskManagerResourceGroup.id
+  ]
+}
+
+resource "azurerm_role_assignment" "planner_secret_reader" {
+  scope              = azurerm_resource_group.TaskManagerResourceGroup.id
+  role_definition_id = azurerm_role_definition.planner_secret_reader.role_definition_resource_id
+  principal_id       = azurerm_user_assigned_identity.taskmanager-ci-planner.principal_id
+}
