@@ -1,4 +1,5 @@
-variable "consumption_workload_profile" {
+
+variable "state_storage" {
   type    = string
-  default = "Consumption"
+  default = "taskmanagerf0410d5947e4"
 }
