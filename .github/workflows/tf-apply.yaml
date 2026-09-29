@@ -5,9 +5,9 @@ on:
     push:
         branches:
             - main
-        paths:
-            - "terraform/prod/**"
-            - ".github/workflows/deploy.yaml"
+        # paths:
+        #     - "terraform/prod/**"
+        #     - ".github/workflows/deploy.yaml"
 permissions:
   id-token: write
   contents: read
