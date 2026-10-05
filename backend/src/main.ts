@@ -1,8 +1,11 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { configureEntraDatabaseUrl } from './database/entra-database-url';
 
 async function bootstrap() {
+  await configureEntraDatabaseUrl();
+
   const app = await NestFactory.create(AppModule);
   const corsOrigin = process.env.CORS_ORIGIN?.split(',').map((origin) => origin.trim());
 
