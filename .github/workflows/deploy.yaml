@@ -54,13 +54,13 @@ jobs:
               context: ./backend
               push: true
               tags: ${{ steps.acr-name.outputs.name }}.azurecr.io/backend:${{ github.event.workflow_run.head_sha }}
-          - name: Deploy backend revision
+          - name: Update job revision
             run: |
               az containerapp job update \
                   --name database-migration \
                   --resource-group TaskManager \
                   --image "${{ steps.acr-name.outputs.name }}.azurecr.io/backend:${{ github.event.workflow_run.head_sha }}"
-          - name: Update migration job image
+          - name: Run migration job
             run: |
               EXECUTION_NAME=$(az containerapp job start \
               --name database-migration \

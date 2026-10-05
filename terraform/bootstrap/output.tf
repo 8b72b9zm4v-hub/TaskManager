@@ -7,7 +7,7 @@ output "backend_runtime_identity_id" {
   value = azurerm_user_assigned_identity.acr_pull_container_app.id
 }
 output "bdd_group_members_id" {
-  value = azuread_group.bdd_members.id
+  value = azuread_group.bdd_members.object_id
 }
 output "bdd_group_members_name" {
   value = azuread_group.bdd_members.display_name

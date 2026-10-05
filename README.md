@@ -341,3 +341,4 @@ L’appartenance à un groupe Entra ne crée pas encore de privilèges dans Post
 - [ ] Réaliser une revue de sécurité.
 - [ ] Évaluer l’ajout de Key Vault lorsqu’un secret applicatif sera nécessaire.
 - [ ] Ajouter azure monitor et des règles de coûts.
+- [ ] Workflow d’orchestration de release.
