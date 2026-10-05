@@ -22,6 +22,11 @@ resource "azurerm_user_assigned_identity" "bdd_user" {
   name                = "bdd_user"
   resource_group_name = azurerm_resource_group.TaskManagerResourceGroup.name
 }
+resource "azurerm_user_assigned_identity" "bdd_admin" {
+  location            = azurerm_resource_group.TaskManagerResourceGroup.location
+  name                = "bdd_admin"
+  resource_group_name = azurerm_resource_group.TaskManagerResourceGroup.name
+}
 
 
 # Nouveau rôle RBAC :
@@ -120,5 +125,6 @@ resource "azuread_group" "postgresql_admin_group_name" {
   security_enabled = true
   members = [
     data.azuread_client_config.current.object_id,
+    azurerm_user_assigned_identity.bdd_admin.principal_id
   ]
 }
